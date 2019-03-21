@@ -28,7 +28,8 @@ echo "starting main"
 pwd
 #singularity exec -e docker://brainlife/normalizedata
 
-singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a pwd && ls -la && ls -l msa && ./msa/main
+# singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a pwd && ls -la && ls -l msa && ./msa/main
+singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./msa/main
 
 
 #export MATLABPATH=$MATLABPATH:$SERVICE_DIR
