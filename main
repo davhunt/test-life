@@ -5,12 +5,48 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
+cd app-datanormalize
+#clean up previous job (just in case)
+rm -f finished
+
+module load singularity 2> /dev/null
+
+#create config.json
+dwi=$(jq -r .dwi config.json)
+parentdir="$(dirname "$dwi")"
+
+echo $( jq -n \
+		--arg bvals "$parentdir/dwi.bvals" \
+		--arg bvecs "$parentidr/dwi.bvecs" \
+		--arg dwi "$dwi" \
+		'{"bvals": $bvals, "bvecs": $bvecs, "dwi": $dwi, "xflip": false, "yflip": false, "zflip": false}' ) > config.json
+
+
+echo "starting main"
+
+#singularity exec -e docker://brainlife/normalizedata
+singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./msa/main
+
+
+#export MATLABPATH=$MATLABPATH:$SERVICE_DIR
+#time matlab -nodisplay -nosplash -r main
+
+#check for output files
+if [ -s dwi.bvecs ] && [ -s dwi.bvals ]; then
+	echo 0 > finished
+else
+	echo "bvecs or bvals  missing"
+	echo 1 > finished
+	exit 1
+fi
+cd ..
+
 set -e
 set -x
 
 export MAXMEM=19000000
 # make sure dwi is in 'RAS' orientation
-time singularity exec docker://brainlife/fsl ./check_orientation.sh
+#time singularity exec docker://brainlife/fsl ./check_orientation.sh
 
 #time singularity exec docker://brainlife/mcr:2018a ./compiled/main
 time singularity exec docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
