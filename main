@@ -5,6 +5,9 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
+dwi=$(jq -r .dwi config.json)
+parentdir="$(dirname "$dwi")"
+
 cd app-datanormalize
 #clean up previous job (just in case)
 rm -f finished
@@ -12,8 +15,6 @@ rm -f finished
 module load singularity 2> /dev/null
 
 #create config.json
-dwi=$(jq -r .dwi config.json)
-parentdir="$(dirname "$dwi")"
 
 echo $( jq -n \
 		--arg bvals "$parentdir/dwi.bvals" \
