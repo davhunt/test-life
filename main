@@ -45,7 +45,7 @@ else
 	exit 1
 fi
 mv dwi.bvals $parentdir/dwi.bvalss && mv dwi.bvecs $parentdir/dwi.bvecss && echo ok
-cd $PWD
+cd $pwd
 #cd /N/u/davhunt/Carbonate/app-life2/app-life/
 
 set -e
