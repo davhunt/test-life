@@ -5,6 +5,7 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
+pwd=$PWD
 dwi=$(jq -r .dwi config.json)
 parentdir="$(dirname "$dwi")"
 
@@ -43,8 +44,9 @@ else
 	echo 1 > finished
 	exit 1
 fi
-mv dwi.bvals $parentdir/dwi.bvals && mv dwi.bvecs $parentdir/dwi.bvecs && echo ok
-cd ..
+mv dwi.bvals $parentdir/dwi.bvalss && mv dwi.bvecs $parentdir/dwi.bvecss && echo ok
+cd $PWD
+#cd /N/u/davhunt/Carbonate/app-life2/app-life/
 
 set -e
 set -x
@@ -54,7 +56,7 @@ export MAXMEM=19000000
 #time singularity exec docker://brainlife/fsl ./check_orientation.sh
 
 #time singularity exec docker://brainlife/mcr:2018a ./compiled/main
-time singularity exec docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
+time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a bash -c "pwd && cd /N/u/davhunt/Carbonate/app-life2/app-life && ./compiled/main"
 
 #make sure output_fe.mat exists (matlab doesn't set exit code!)
 if [ ! -s output_fe.mat ];
