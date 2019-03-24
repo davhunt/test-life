@@ -8,7 +8,7 @@
 pwd=$PWD
 dwi=$(jq -r .dwi config.json)
 parentdir="$(dirname "$dwi")"
-echo $PWD
+echo $PWD && echo $parentdir
 
 #round bvals
 cd app-datanormalize
@@ -48,7 +48,7 @@ else
 	echo 1 > finished
 	exit 1
 fi
-mv dwi.bvals $parentdir/dwi.bvals && mv dwi.bvecs $parentdir/dwi.bvecs && echo ok
+echo $parentdir && mv dwi.bvals $parentdir/dwi.bvals && mv dwi.bvecs $parentdir/dwi.bvecs && echo ok
 cd $pwd
 #cd /N/u/davhunt/Carbonate/app-life2/app-life/
 
