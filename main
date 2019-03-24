@@ -8,6 +8,7 @@
 pwd=$PWD
 dwi=$(jq -r .dwi config.json)
 parentdir="$(dirname "$dwi")"
+echo $PWD
 
 #round bvals
 cd app-datanormalize
