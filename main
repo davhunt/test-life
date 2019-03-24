@@ -28,6 +28,7 @@ echo $( jq -n \
 
 echo "starting main"
 pwd
+echo $parentdir
 #singularity exec -e docker://brainlife/normalizedata
 
 singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./msa/main
