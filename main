@@ -37,6 +37,9 @@ singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a pwd && ls -la 
 #export MATLABPATH=$MATLABPATH:$SERVICE_DIR
 #time matlab -nodisplay -nosplash -r main
 
+echo $PWD
+cd $pwd
+cd app-datanormalize
 #check for output files
 if [ -s dwi.bvals ]; then
 	echo 0 > finished
