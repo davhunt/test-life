@@ -31,7 +31,7 @@ pwd
 echo $parentdir
 #singularity exec -e docker://brainlife/normalizedata
 
-time singularity exec docker://brainlife/mcr:neurodebian1604-r2017a bash -c "cd $pwd/app-datanormalize && ./msa/main && ls -a && ls .."
+time singularity exec docker://brainlife/mcr:neurodebian1604-r2017a bash -c "cd $pwd/app-datanormalize && ./msa/main"
 #singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./msa/main
 
 
