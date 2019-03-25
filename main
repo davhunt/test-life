@@ -41,6 +41,8 @@ time singularity exec docker://brainlife/mcr:neurodebian1604-r2017a bash -c "cd 
 echo $PWD
 cd $pwd
 cd app-datanormalize
+ls -a
+ls ..
 #check for output files
 if [ -s dwi.bvals ]; then
 	echo 0 > finished
