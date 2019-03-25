@@ -44,6 +44,7 @@ cd app-datanormalize
 ls -a
 ls ..
 echo $(head -n 1 "$parentdir/dwi.bvals")
+ls $parentdir
 #check for output files
 if [ -s dwi.bvals ]; then
 	echo 0 > finished
