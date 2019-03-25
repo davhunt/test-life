@@ -5,9 +5,9 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
-pwd=$PWD
-dwi=$(jq -r .dwi config.json)
-parentdir="$(dirname "$dwi")"
+export pwd=$PWD
+export dwi=$(jq -r .dwi config.json)
+export parentdir="$(dirname "$dwi")"
 echo $PWD && echo $parentdir
 
 #round bvals
