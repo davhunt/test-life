@@ -9,6 +9,8 @@ export pwd=$PWD
 export dwi=$(jq -r .dwi config.json)
 export parentdir="$(dirname "$dwi")"
 echo $PWD && echo $parentdir
+ls -a
+ls $parentdir
 
 #round bvals
 cd app-datanormalize
@@ -45,6 +47,9 @@ ls -a
 ls ..
 echo $(head -n 1 "$parentdir/dwi.bvals")
 ls $parentdir
+printenv
+dwi=$(jq -r .dwi config.json)
+ls "$(dirname "$dwi")"
 #check for output files
 if [ -s dwi.bvals ]; then
 	echo 0 > finished
