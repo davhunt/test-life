@@ -5,62 +5,9 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
-export pwd=$PWD
-export dwi=$(jq -r .dwi config.json)
-export parentdir="$(dirname "$dwi")"
-echo $PWD && echo $parentdir
-ls -a
-ls $parentdir
 
 #round bvals
-cd app-datanormalize
-#clean up previous job (just in case)
-rm -f finished
-
-module load singularity 2> /dev/null
-
-#create config.json
-
-echo $( jq -n \
-		--arg bvals "$parentdir/dwi.bvals" \
-		--arg bvecs "$parentdir/dwi.bvecs" \
-		--arg dwi "$dwi" \
-		'{"bvals": $bvals, "bvecs": $bvecs, "dwi": $dwi, "xflip": false, "yflip": false, "zflip": false}' ) > config.json
-
-
-echo "starting main"
-pwd
-echo $parentdir
-#singularity exec -e docker://brainlife/normalizedata
-
-time singularity exec docker://brainlife/mcr:neurodebian1604-r2017a bash -c "cd $pwd/app-datanormalize && ./msa/main"
-#singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./msa/main
-
-
-#export MATLABPATH=$MATLABPATH:$SERVICE_DIR
-#time matlab -nodisplay -nosplash -r main
-
-echo $PWD
-cd $pwd
-cd app-datanormalize
-ls -a
-ls ..
-echo $(head -n 1 "$parentdir/dwi.bvals")
-ls $parentdir
-printenv
-dwi=$(jq -r .dwi config.json)
-ls "$(dirname "$dwi")"
-#check for output files
-if [ -s dwi.bvals ]; then
-	echo 0 > finished
-else
-	echo "bvecs or bvals missing"
-	echo 1 > finished
-	exit 1
-fi
-echo $parentdir && mv dwi.bvals $parentdir/dwi.bvals && mv dwi.bvecs $parentdir/dwi.bvecs && echo ok
-cd $pwd
-#cd /N/u/davhunt/Carbonate/app-life2/app-life/
+./check_orientation.sh
 
 set -e
 set -x
