@@ -13,11 +13,8 @@ set -e
 set -x
 
 export MAXMEM=19000000
-# make sure dwi is in 'RAS' orientation
-#time singularity exec docker://brainlife/fsl ./check_orientation.sh
-
 #time singularity exec docker://brainlife/mcr:2018a ./compiled/main
-time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a bash -c "pwd && cd /N/u/davhunt/Carbonate/app-life2/app-life && ./compiled/main"
+time singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
 
 #make sure output_fe.mat exists (matlab doesn't set exit code!)
 if [ ! -s output_fe.mat ];
