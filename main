@@ -5,9 +5,10 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
+export dwi=$(jq -r .dwi config.json)
 
 #round bvals
-./check_orientation.sh
+./round_bvals.py $dwi
 
 set -e
 set -x
