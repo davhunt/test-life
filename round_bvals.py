@@ -13,6 +13,7 @@ with open(sys.argv[1]) as f:
 with open('dwi.bvals','w') as f:
     for bval in bvals:
         print(bval)
+        bval = bval.replace('\n','')
 	bval = round(float(bval),-2)
         f.write("%s " %bval)
 
