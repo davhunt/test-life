@@ -5,10 +5,10 @@
 #PBS -l walltime=10:00:00
 #PBS -N life
 
-export dwi=$(jq -r .dwi config.json)
+export bvals="$(dirname "$(jq -r .dwi config.json)")"/dwi.bvals
 
 #round bvals
-./round_bvals.py $dwi
+./round_bvals.py $bvals
 
 set -e
 set -x
