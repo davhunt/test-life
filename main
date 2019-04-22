@@ -8,6 +8,11 @@
 #round bvals
 export bvals="$(dirname "$(jq -r .dwi config.json)")"/dwi.bvals
 ./round_bvals.py $bvals
+#exit if no b0 images present
+ret=$?
+if [ $ret -ne 0 ]; then
+	exit 1
+fi
 
 set -e
 set -x
